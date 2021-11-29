@@ -1,0 +1,170 @@
+
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;			-- For IEEE data types
+USE ieee.std_logic_unsigned.all;		-- For + and - operations
+
+-- Entity Declaration
+
+ENTITY Counter IS
+	PORT (
+		clock, reset, x	:	IN STD_LOGIC;
+		W, X, Y, Z						:	OUT STD_LOGIC
+	);
+END Counter;
+
+
+
+--  Architecture Section
+
+ARCHITECTURE arch OF Counter IS
+
+-- Build an enumerated type for the state machine
+-- The states declared here come directly from the state diagram
+TYPE state_type IS (A, B, C, D, E, F, G, H);
+
+-- Create a register to hold teh present and next states
+SIGNAL pr_state, nx_state	: state_type;
+
+
+
+-- Begin the architecture section...
+BEGIN
+
+
+
+----------------------- PRESENT STATE SECTION (REGISTER) --------------------------------------------
+--
+--  The function of this section is to assign the next state to the present state at the active clock edge.
+--  An asynchronous reset signal should be included to initialize the system to the default first state of the system. 
+--  This section is implemented with sequential (behavioral) VHDL code with a PROCESS.
+--
+
+
+	PROCESS (reset, clock)
+	BEGIN
+		
+		--Active High Reset
+		IF (reset = '1') THEN
+			pr_state <= A;
+			
+		ELSIF (clock'EVENT AND clock = '1') THEN
+			pr_state <= nx_state;
+			
+		END IF;
+	
+	END PROCESS;
+
+
+	--Moore Machine: 1 in State D only
+	W <= '0' WHEN (pr_state = A) ELSE
+							'0' WHEN (pr_state = B) ELSE
+							'0' WHEN (pr_state = C) ELSE
+							'0' WHEN (pr_state = D) ELSE
+							'0' WHEN (pr_state = E) ELSE
+							'0' WHEN (pr_state = F) ELSE
+							'0' WHEN (pr_state = G) ELSE
+							'0' WHEN (pr_state = H) ELSE '1';
+	X <= '0' WHEN (pr_state = A) ELSE
+							'0' WHEN (pr_state = B) ELSE
+							'0' WHEN (pr_state = C) ELSE
+							'0' WHEN (pr_state = D) ELSE
+							'1' WHEN (pr_state = E) ELSE
+							'1' WHEN (pr_state = F) ELSE
+							'1' WHEN (pr_state = G) ELSE
+							'1' WHEN (pr_state = H) ELSE '1';
+	Y <= '0' WHEN (pr_state = A) ELSE
+							'0' WHEN (pr_state = B) ELSE
+							'1' WHEN (pr_state = C) ELSE
+							'1' WHEN (pr_state = D) ELSE
+							'0' WHEN (pr_state = E) ELSE
+							'0' WHEN (pr_state = F) ELSE
+							'1' WHEN (pr_state = G) ELSE
+							'1' WHEN (pr_state = H) ELSE '1';
+	Z <= '0' WHEN (pr_state = A) ELSE
+							'1' WHEN (pr_state = B) ELSE
+							'0' WHEN (pr_state = C) ELSE
+							'1' WHEN (pr_state = D) ELSE
+							'0' WHEN (pr_state = E) ELSE
+							'1' WHEN (pr_state = F) ELSE
+							'0' WHEN (pr_state = G) ELSE
+							'1' WHEN (pr_state = H) ELSE '1';
+
+
+	PROCESS (pr_state, x)
+	BEGIN
+
+		
+		CASE pr_state IS
+		
+			WHEN A =>							--State A
+				IF x='0' THEN
+					nx_state <= A;				--x=1, transition to state B
+				ELSE
+					nx_state <= B;
+			END IF;		
+					
+					
+			WHEN B =>							--State B
+				IF x='0' THEN
+					nx_state <= B;				--x=1, transition to state C
+				ELSE
+					nx_state <= C;
+			END IF;		
+					
+					
+			WHEN C =>							--State C
+				IF x='0' THEN
+					nx_state <= C;				--x=1, transition to state D
+				ELSE
+					nx_state <= D;
+			END IF;		
+					
+					
+			WHEN D =>							--State D
+				IF x='0' THEN
+					nx_state <= D;				--x=1, transition to state D
+				ELSE
+					nx_state <= E;
+			End IF;
+			
+			
+			WHEN E =>							
+				IF x='0' THEN
+					nx_state <= E;				
+				ELSE
+					nx_state <= F;
+			End IF;			
+					
+					
+			WHEN F =>							
+				IF x='0' THEN
+					nx_state <= F;				
+				ELSE
+					nx_state <= G;
+			End IF;		
+
+			WHEN G =>							
+				IF x='0' THEN
+					nx_state <= G;				
+				ELSE
+					nx_state <= H;
+			End IF;	
+
+			
+			WHEN H =>							
+				IF x='0' THEN
+					nx_state <= H;				
+				ELSE
+					nx_state <= A;
+			End IF;	
+			
+					
+			WHEN OTHERS =>						--Including WHEN OTHERS is a good habit to cover all cases
+				nx_state <= A;
+				
+			END CASE;
+			
+		END PROCESS;
+
+
+END arch;
