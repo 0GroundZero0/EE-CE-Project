@@ -1,16 +1,16 @@
 /*<simulation_settings>
-<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off FinalProject -c FinalProject --vector_source="C:/Users/m245772/Desktop/FinalProject/Waveform.vwf" --testbench_file="C:/Users/m245772/Desktop/FinalProject/simulation/qsim/Waveform.vwf.vht"</ftestbench_cmd>
-<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off FinalProject -c FinalProject --vector_source="C:/Users/m245772/Desktop/FinalProject/Waveform.vwf" --testbench_file="C:/Users/m245772/Desktop/FinalProject/simulation/qsim/Waveform.vwf.vht"</ttestbench_cmd>
-<fnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory="C:/Users/m245772/Desktop/FinalProject/simulation/qsim/" FinalProject -c FinalProject</fnetlist_cmd>
-<tnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=off --flatten_buses=off --timescale=1ps --tool=modelsim_oem --format=vhdl --output_directory="C:/Users/m245772/Desktop/FinalProject/simulation/qsim/" FinalProject -c FinalProject</tnetlist_cmd>
+<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off FinalProject -c FinalProject --vector_source="C:/Users/m240918/Documents/EE-CE Project/EE-CE-Project/Waveform.vwf" --testbench_file="C:/Users/m240918/Documents/EE-CE Project/EE-CE-Project/simulation/qsim/Waveform.vwf.vht"</ftestbench_cmd>
+<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off FinalProject -c FinalProject --vector_source="C:/Users/m240918/Documents/EE-CE Project/EE-CE-Project/Waveform.vwf" --testbench_file="C:/Users/m240918/Documents/EE-CE Project/EE-CE-Project/simulation/qsim/Waveform.vwf.vht"</ttestbench_cmd>
+<fnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory="C:/Users/m240918/Documents/EE-CE Project/EE-CE-Project/simulation/qsim/" FinalProject -c FinalProject</fnetlist_cmd>
+<tnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=off --flatten_buses=off --timescale=1ps --tool=modelsim_oem --format=vhdl --output_directory="C:/Users/m240918/Documents/EE-CE Project/EE-CE-Project/simulation/qsim/" FinalProject -c FinalProject</tnetlist_cmd>
 <modelsim_script>onerror {exit -code 1}
 vlib work
 vcom -work work FinalProject.vho
 vcom -work work Waveform.vwf.vht
-vsim -c -t 1ps -L cyclonev -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.Counter_vhd_vec_tst
+vsim -c -t 1ps -L cyclonev -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.CounterDisplay_vhd_vec_tst
 vcd file -direction FinalProject.msim.vcd
-vcd add -internal Counter_vhd_vec_tst/*
-vcd add -internal Counter_vhd_vec_tst/i1/*
+vcd add -internal CounterDisplay_vhd_vec_tst/*
+vcd add -internal CounterDisplay_vhd_vec_tst/i1/*
 proc simTimestamp {} {
     echo "Simulation time: $::now ps"
     if { [string equal running [runStatus]] } {
@@ -20,20 +20,15 @@ proc simTimestamp {} {
 after 2500 simTimestamp
 run -all
 quit -f
-
-
-
-
-
 </modelsim_script>
 <modelsim_script_timing>onerror {exit -code 1}
 vlib work
 vcom -work work FinalProject.vho
 vcom -work work Waveform.vwf.vht
-vsim -novopt -c -t 1ps -sdfmax Counter_vhd_vec_tst/i1=FinalProject_vhd.sdo -L cyclonev -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.Counter_vhd_vec_tst
+vsim -novopt -c -t 1ps -sdfmax CounterDisplay_vhd_vec_tst/i1=FinalProject_vhd.sdo -L cyclonev -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.CounterDisplay_vhd_vec_tst
 vcd file -direction FinalProject.msim.vcd
-vcd add -internal Counter_vhd_vec_tst/*
-vcd add -internal Counter_vhd_vec_tst/i1/*
+vcd add -internal CounterDisplay_vhd_vec_tst/*
+vcd add -internal CounterDisplay_vhd_vec_tst/i1/*
 proc simTimestamp {} {
     echo "Simulation time: $::now ps"
     if { [string equal running [runStatus]] } {
@@ -43,11 +38,6 @@ proc simTimestamp {} {
 after 2500 simTimestamp
 run -all
 quit -f
-
-
-
-
-
 </modelsim_script_timing>
 <hdl_lang>vhdl</hdl_lang>
 </simulation_settings>*/
@@ -228,14 +218,12 @@ TRANSITION_LIST("Clock")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 1 FOR 20.0;
 		NODE
 		{
-			REPEAT = 24;
+			REPEAT = 25;
 			LEVEL 0 FOR 20.0;
 			LEVEL 1 FOR 20.0;
 		}
-		LEVEL 0 FOR 20.0;
 	}
 }
 
@@ -298,29 +286,19 @@ TRANSITION_LIST("X")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 0 FOR 30.0;
-		LEVEL 1 FOR 40.0;
+		NODE
+		{
+			REPEAT = 12;
+			LEVEL 0 FOR 40.0;
+			LEVEL 1 FOR 40.0;
+		}
 		LEVEL 0 FOR 40.0;
-		LEVEL 1 FOR 40.0;
-		LEVEL 0 FOR 40.0;
-		LEVEL 1 FOR 40.0;
-		LEVEL 0 FOR 40.0;
-		LEVEL 1 FOR 40.0;
-		LEVEL 0 FOR 40.0;
-		LEVEL 1 FOR 40.0;
-		LEVEL 0 FOR 40.0;
-		LEVEL 1 FOR 40.0;
-		LEVEL 0 FOR 40.0;
-		LEVEL 1 FOR 40.0;
-		LEVEL 0 FOR 40.0;
-		LEVEL 1 FOR 40.0;
-		LEVEL 0 FOR 370.0;
 	}
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "Clock";
+	CHANNEL = "A";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 0;
@@ -329,7 +307,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "Rin";
+	CHANNEL = "B";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 1;
@@ -338,7 +316,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "X";
+	CHANNEL = "C";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 2;
@@ -347,7 +325,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "A";
+	CHANNEL = "Clock";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 3;
@@ -356,7 +334,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "B";
+	CHANNEL = "D";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 4;
@@ -365,7 +343,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "C";
+	CHANNEL = "E";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 5;
@@ -374,7 +352,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "D";
+	CHANNEL = "F";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 6;
@@ -383,7 +361,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "E";
+	CHANNEL = "G";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 7;
@@ -392,7 +370,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "F";
+	CHANNEL = "R";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 8;
@@ -401,7 +379,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "G";
+	CHANNEL = "Rin";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 9;
@@ -410,7 +388,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "R";
+	CHANNEL = "X";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 10;

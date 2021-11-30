@@ -1,0 +1,37 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity CounterDisplay is
+    port(
+    clock, Rin, X : IN STD_LOGIC;
+    A, B, C, D, E, F, G, R : OUT STD_LOGIC
+    );
+end CounterDisplay;
+
+
+
+architecture arch of CounterDisplay is
+
+component Counter
+    port (
+        clock, reset, X	:	IN STD_LOGIC;
+		U, V, W, R		:	OUT STD_LOGIC
+    );
+end component;
+
+component DisplayDriver
+    port (
+        Xo, Y, Z : IN STD_LOGIC;
+        A, B, C, D, E, F, G : OUT STD_LOGIC
+    );
+end component;
+
+
+begin
+
+Xo <= U;
+Y <= V;
+Z <= W;
+
+
+end arch;
