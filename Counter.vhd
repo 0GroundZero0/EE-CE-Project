@@ -8,7 +8,7 @@ USE ieee.std_logic_unsigned.all;		-- For + and - operations
 ENTITY Counter IS
 	PORT (
 		clock, reset, X	:	IN STD_LOGIC;
-		T, U, V, W, R						:	OUT STD_LOGIC
+		U, V, W, R						:	OUT STD_LOGIC
 	);
 END Counter;
 
@@ -56,22 +56,6 @@ BEGIN
 
 
 	--Moore Machine: 1 in State D only
-	T <= '0' WHEN (pr_state = A) ELSE
-							'0' WHEN (pr_state = aa) ELSE
-							'0' WHEN (pr_state = B) ELSE
-							'0' WHEN (pr_state = bb) ELSE
-							'0' WHEN (pr_state = C) ELSE
-							'0' WHEN (pr_state = cc) ELSE
-							'0' WHEN (pr_state = D) ELSE
-							'0' WHEN (pr_state = dd) ELSE
-							'0' WHEN (pr_state = E) ELSE
-							'0' WHEN (pr_state = ee) ELSE
-							'0' WHEN (pr_state = F) ELSE
-							'0' WHEN (pr_state = ff) ELSE
-							'0' WHEN (pr_state = G) ELSE
-							'0' WHEN (pr_state = gg) ELSE
-							'0' WHEN (pr_state = H) ELSE
-							'0' WHEN (pr_state = hh) ELSE	'1';
 	U <= '0' WHEN (pr_state = A) ELSE
 							
 							'0' WHEN (pr_state = aa) ELSE
