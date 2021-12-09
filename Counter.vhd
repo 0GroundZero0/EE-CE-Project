@@ -128,135 +128,107 @@ BEGIN
 							
 	R <= '1' WHEN (pr_state = H) ELSE '0';								--Reset Function for when score reaches 7
 
-	
-	
-
 	PROCESS (pr_state, filtered_x)
 	BEGIN
-
-		
 		CASE pr_state IS
-		
 			WHEN A =>							
 				IF filtered_x='0' THEN
 					nx_state <= A;				
 				ELSE
 					nx_state <= aa;
-			END IF;		
-					
+				END IF;			
 			WHEN aa =>							
 				IF filtered_x='1' THEN
 					nx_state <= aa;				
 				ELSE
 					nx_state <= B;
-			END IF;		
-					
+				END IF;		
 			WHEN B =>							
 				IF filtered_x='0' THEN
 					nx_state <= B;				
 				ELSE
 					nx_state <= bb;
-			END IF;		
-					
+				END IF;			
 			WHEN bb =>							
 				IF filtered_x='1' THEN
 					nx_state <= bb;				
 				ELSE
 					nx_state <= C;
-			END IF;						
-					
+				END IF;							
 			WHEN C =>							
 				IF filtered_x='0' THEN
 					nx_state <= C;				
 				ELSE
 					nx_state <= cc;
-			END IF;		
-					
+				END IF;			
 			WHEN cc =>							
 				IF filtered_x='1' THEN
 					nx_state <= cc;				
 				ELSE
 					nx_state <= D;
-			END IF;						
-					
+				END IF;								
 			WHEN D =>							
 				IF filtered_x='0' THEN
 					nx_state <= D;				
 				ELSE
 					nx_state <= dd;
-			End IF;
-			
+				END IF;
 			WHEN dd =>							
 				IF filtered_x='1' THEN
 					nx_state <= dd;				
 				ELSE
 					nx_state <= E;
-			END IF;				
-			
+				END IF;				
 			WHEN E =>							
 				IF filtered_x='0' THEN
 					nx_state <= E;				
 				ELSE
 					nx_state <= ee;
-			End IF;			
-					
+				END IF;				
 			WHEN ee =>							
 				IF filtered_x='1' THEN
 					nx_state <= ee;				
 				ELSE
 					nx_state <= F;
-			END IF;						
-					
+				END IF;								
 			WHEN F =>							
 				IF filtered_x='0' THEN
 					nx_state <= F;				
 				ELSE
 					nx_state <= ff;
-			End IF;		
-			
+				END IF;		
 			WHEN ff =>							
 				IF filtered_x='1' THEN
 					nx_state <= ff;				
 				ELSE
 					nx_state <= G;
-			END IF;				
-
+				END IF;			
 			WHEN G =>							
 				IF filtered_x='0' THEN
 					nx_state <= G;				
 				ELSE
 					nx_state <= gg;
-			End IF;	
-
+				END IF;	
 			WHEN gg =>							
 				IF filtered_x='1' THEN
 					nx_state <= gg;				
 				ELSE
 					nx_state <= H;
-			END IF;				
-			
+				END IF;				
 			WHEN H =>							
 				IF filtered_x='0' THEN
 					nx_state <= H;				
 				ELSE
 					nx_state <= hh;
-			End IF;	
-			
+				END IF;	
 			WHEN hh =>							
 				IF filtered_x='1' THEN
 					nx_state <= hh;				
 				ELSE
 					nx_state <= A;
-			END IF;	
-					
+				END IF;			
 			WHEN OTHERS =>						--Including WHEN OTHERS is a good habit to cover all cases
 				nx_state <= A;
-				
-			END CASE;
-			
-						
-			
-		END PROCESS;
-
-
+	END CASE;
+	END PROCESS;
 END arch;
