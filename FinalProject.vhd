@@ -6,7 +6,7 @@ entity FinalProject is
 	port(
 		clock, reset, X1, X2, fan : IN STD_LOGIC;
 		A, B, D, E: OUT STD_LOGIC_VECTOR (6 downto 0);
-		C, fz, fo : OUT STD_LOGIC
+		C, L : OUT STD_LOGIC
 	);
 end FinalProject;
 
@@ -29,12 +29,12 @@ NX1 <= not X1;
 NX2 <= not X2;
 
 C <= fan;
-
+L <= fan;
 u1: CounterDisplay port map (clock, Rin, NX1, A(6), A(5), A(4), A(3), A(2), A(1), A(0), R1);
 u2: CounterDisplay port map (clock, Rin, NX2, B(6), B(5), B(4), B(3), B(2), B(1), B(0), R2);
 
---R <= '1' when (Asub1 = '1') and (Asub2 = '0') else
---	  '1' when (Bsub1 = '1') and (Bsub2 = '0');
+Rin <= not reset or R1 or R2;
+
 R <= '1' when R1 = '1' or R2 = '1' else
 	  '0' when reset = '0' else
 	  '0' when clock = '1';
@@ -56,12 +56,7 @@ begin
 		END IF; 
 end process;
 
---f <= '0' when (Asub1 = '1') and (Asub2 = '0') else 
---	  '1' when (Bsub1 = '1') and (Bsub2 = '0');
-
 	  
-fo <= h;
-fz <= f;
 process (pr_state, h, f, reset)
 begin
 	case pr_state is
@@ -127,6 +122,5 @@ E <=  "0000001" when pr_state = S0 else
 		"1001111" when pr_state = S3 else
 		"1001111" when pr_state = S4 else
 		"0010010" when pr_state = S5;
-Rin <= not reset or R1 or R2;
 
 end arch;
